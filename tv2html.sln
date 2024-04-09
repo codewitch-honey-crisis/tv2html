@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tv2html", "tv2html\tv2html.csproj", "{38934320-7A4A-4249-86F0-56CEC26D97F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE3A9B9A-35A4-4BF9-9D3E-DFDFD1E69A68}"
+	ProjectSection(SolutionItems) = preProject
+		auth_token.txt = auth_token.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
