@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="play.svg" />
+    <None Remove="w3.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="play.svg" />
+    <EmbeddedResource Include="w3.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(SolutionDir)csppg.exe &quot;$(ProjectDir)series.index.aspx&quot; /class SeriesIndex /output &quot;$(ProjectDir)SeriesIndex.cs&quot;&#xD;&#xA;$(SolutionDir)csppg.exe &quot;$(ProjectDir)season.index.aspx&quot; /class SeasonIndex /output &quot;$(ProjectDir)SeasonIndex.cs&quot;&#xD;&#xA;$(SolutionDir)csppg.exe &quot;$(ProjectDir)episode.aspx&quot; /class Episode /output &quot;$(ProjectDir)Episode.cs&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
+  </Target>
+
+</Project>

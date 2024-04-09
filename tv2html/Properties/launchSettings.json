@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "tv2html": {
+      "commandName": "Project"
+    },
+    "burn notice": {
+      "commandName": "Project",
+      "commandLineArgs": "{insert_token} \"burn notice\" /output ..\\..\\..\\"
+    },
+    "searchTv": {
+      "commandName": "Project",
+      "commandLineArgs": "{insert_token} \"burn\""
+    },
+    "burn notice id": {
+      "commandName": "Project",
+      "commandLineArgs": "{insert_token} \"#2919\""
+    }
+  }
+}
