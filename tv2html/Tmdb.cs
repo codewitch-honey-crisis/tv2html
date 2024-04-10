@@ -126,7 +126,7 @@ internal static class Tmdb
 				sb.Append(file[j]);
 			}
 		}
-		result = Path.Combine(result, sb.ToString());
+		result =sb.ToString();
 		
 		return result;
 	}
