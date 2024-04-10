@@ -5,15 +5,15 @@
     },
     "burn notice": {
       "commandName": "Project",
-      "commandLineArgs": "{insert_token} \"burn notice\" /output ..\\..\\..\\"
+      "commandLineArgs": "\"burn notice\" {insert_token} /output ..\\..\\..\\"
     },
     "searchTv": {
       "commandName": "Project",
-      "commandLineArgs": "{insert_token} \"burn\""
+      "commandLineArgs": "\"burn\" {insert_token}"
     },
     "burn notice id": {
       "commandName": "Project",
-      "commandLineArgs": "{insert_token} \"#2919\""
+      "commandLineArgs": "\"#2919\" {insert_token}"
     }
   }
 }

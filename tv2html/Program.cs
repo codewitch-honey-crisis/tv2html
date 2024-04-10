@@ -7,10 +7,11 @@ using System.Web;
 static partial class Program
 {
 	static int ExitCode = 0;
-	[CmdArg(Ordinal = 0, Required = true, ItemName = "auth", Description = "The TMDb auth token to use")]
-	static string? AuthToken = null;
-	[CmdArg(Ordinal = 1, Required = true, ItemName = "series", Description = "The TV series to search for")]
+	[CmdArg(Ordinal = 0, Required = true, ItemName = "series", Description = "The TV series to search for")]
 	static string? Series = null;
+	[CmdArg(Ordinal = 1, Required = true, ItemName = "auth", Description = "The TMDb auth token to use")]
+	static string? AuthToken = null;
+
 	[CmdArg("output", ItemName = "path", Description = "The path to the directory to output at")]
 	static DirectoryInfo? Output = null;
 	[CmdArg("lang", ItemName = "lang", Description = "The language code to search. Default en-US")]
