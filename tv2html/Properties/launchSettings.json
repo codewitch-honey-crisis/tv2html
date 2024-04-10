@@ -5,23 +5,23 @@
     },
     "burn notice": {
       "commandName": "Project",
-      "commandLineArgs": "\"burn notice\" {insert_token} /output ..\\..\\..\\"
+      "commandLineArgs": "\"burn notice\" /output ..\\..\\..\\"
     },
     "searchTv": {
       "commandName": "Project",
-      "commandLineArgs": "\"burn\" {insert_token}"
+      "commandLineArgs": "\"burn\""
     },
     "burn notice id": {
       "commandName": "Project",
-      "commandLineArgs": "\"#2919\" {insert_token}"
+      "commandLineArgs": "\"#2919\""
     },
     "murder, she wrote": {
       "commandName": "Project",
-      "commandLineArgs": "\"murder she wrote\" {auth_token} /output ..\\..\\..\\"
+      "commandLineArgs": "\"murder she wrote\" /output ..\\..\\..\\"
     },
     "Eastenders": {
       "commandName": "Project",
-      "commandLineArgs": "#1871 {auth_token} /output ..\\..\\..\\"
+      "commandLineArgs": "#1871 /output ..\\..\\..\\"
     }
   }
 }

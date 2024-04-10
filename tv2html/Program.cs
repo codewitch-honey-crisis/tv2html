@@ -3,13 +3,14 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using System.Xml;
 
 static partial class Program
 {
 	static int ExitCode = 0;
 	[CmdArg(Ordinal = 0, Required = true, ItemName = "series", Description = "The TV series to search for")]
 	static string? Series = null;
-	[CmdArg(Ordinal = 1, Required = true, ItemName = "auth", Description = "The TMDb auth token to use")]
+	[CmdArg(Ordinal = 1, Required = false, ItemName = "auth", Description = "The TMDb auth token to use")]
 	static string? AuthToken = null;
 
 	[CmdArg("output", ItemName = "path", Description = "The path to the directory to output at")]
@@ -19,7 +20,29 @@ static partial class Program
 	static int SeriesId = -1;
 	static void Run()
 	{
-
+		if (string.IsNullOrEmpty(AuthToken))
+		{
+			if (File.Exists("tv2html.config"))
+			{
+				using (var reader = XmlReader.Create(File.OpenRead("tv2html.config")))
+				{
+					while (reader.Read())
+					{
+						if (reader.NodeType == XmlNodeType.Element && reader.Name == "add" && reader.HasAttributes)
+						{
+							if (reader.GetAttribute("key") == "authToken")
+							{
+								AuthToken = reader.GetAttribute("value");
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(string.IsNullOrEmpty(AuthToken)) {
+			throw new ArgumentException("The auth token must be specified", nameof(AuthToken));
+		}
 		if (Output == null)
 		{
 			Output = new DirectoryInfo(".");
@@ -82,13 +105,6 @@ static partial class Program
 		args["series"] = series;
 		args["lang"] = Language;
 		var seriesDir = Output.CreateSubdirectory(Tmdb.GetSafeFilename((string)series.name));
-		args["series_dir"] = seriesDir;
-		Console.Error.Write("Writing series index...");
-		using (var writer = new StreamWriter(Path.Combine(seriesDir.FullName, "index.html"), false, Encoding.UTF8))
-		{
-			SeriesIndex.Run(writer, args);
-		}
-		Console.Error.WriteLine("done!");
 		Console.Error.Write("Copying CSS...");
 		using (var outstm = File.OpenWrite(Path.Combine(Path.Combine(seriesDir.FullName, "web"), "w3.css")))
 		{
@@ -96,6 +112,14 @@ static partial class Program
 			{
 				instm!.CopyTo(outstm);
 			}
+		}
+		Console.Error.WriteLine("done!");
+
+		args["series_dir"] = seriesDir;
+		Console.Error.Write("Writing series index...");
+		using (var writer = new StreamWriter(Path.Combine(seriesDir.FullName, "index.html"), false, Encoding.UTF8))
+		{
+			SeriesIndex.Run(writer, args);
 		}
 		Console.Error.WriteLine("done!");
 		Console.Error.Write("Creating content ");

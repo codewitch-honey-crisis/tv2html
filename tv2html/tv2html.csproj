@@ -19,6 +19,12 @@
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="tv2html.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="$(SolutionDir)csppg.exe &quot;$(ProjectDir)series.index.aspx&quot; /class SeriesIndex /output &quot;$(ProjectDir)SeriesIndex.cs&quot;&#xD;&#xA;$(SolutionDir)csppg.exe &quot;$(ProjectDir)season.index.aspx&quot; /class SeasonIndex /output &quot;$(ProjectDir)SeasonIndex.cs&quot;&#xD;&#xA;$(SolutionDir)csppg.exe &quot;$(ProjectDir)episode.aspx&quot; /class Episode /output &quot;$(ProjectDir)Episode.cs&quot;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
   </Target>
