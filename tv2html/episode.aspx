@@ -77,8 +77,8 @@
     </div>
     <div class="w3-main w3-content w3-padding" style="max-width: 1200px; margin-top: 100px">
 <%
-    string vid_ext = null;
-    string media_type = null;
+    string? vid_ext = null;
+    string? media_type = null;
     var vid_file = System.IO.Path.Combine(series_dir.FullName,Tmdb.GetSafePath((string)season.name));
     vid_file = System.IO.Path.Combine(vid_file,eps);
     if(System.IO.File.Exists(vid_file+".mp4")) {

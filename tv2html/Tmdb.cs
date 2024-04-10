@@ -164,7 +164,7 @@ internal static class Tmdb
 					var dir = Path.GetDirectoryName(path);
 					if(!Directory.Exists(dir))
 					{
-						Directory.CreateDirectory(dir);
+						Directory.CreateDirectory(dir!);
 					}
 					using (var outstm = File.OpenWrite(path))
 					{

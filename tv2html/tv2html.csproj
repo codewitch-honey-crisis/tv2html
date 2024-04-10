@@ -8,12 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="play.svg" />
     <None Remove="w3.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="play.svg" />
     <EmbeddedResource Include="w3.css" />
   </ItemGroup>
 

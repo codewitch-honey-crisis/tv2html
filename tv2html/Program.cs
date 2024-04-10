@@ -88,13 +88,7 @@ static partial class Program
 				instm!.CopyTo(outstm);
 			}
 		}
-		using (var outstm = File.OpenWrite(Path.Combine(Path.Combine(seriesDir.FullName, "web"), "play.svg")))
-		{
-			using (var instm = Assembly.GetExecutingAssembly().GetManifestResourceStream("tv2html.play.svg"))
-			{
-				instm!.CopyTo(outstm);
-			}
-		}
+		
 		for (int i = 0; i < series.seasons.Count; i++)
 		{
 			dynamic season = series.seasons[i];
