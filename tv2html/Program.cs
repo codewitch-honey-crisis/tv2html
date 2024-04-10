@@ -40,7 +40,7 @@ static partial class Program
 				}
 			}
 		}
-		if(string.IsNullOrEmpty(AuthToken)) {
+		if (string.IsNullOrEmpty(AuthToken)) {
 			throw new ArgumentException("The auth token must be specified", nameof(AuthToken));
 		}
 		if (Output == null)
@@ -106,6 +106,7 @@ static partial class Program
 		args["lang"] = Language;
 		var seriesDir = Output.CreateSubdirectory(Tmdb.GetSafeFilename((string)series.name));
 		Console.Error.Write("Copying CSS...");
+		Directory.CreateDirectory(Path.Combine(seriesDir.FullName,"web"));
 		using (var outstm = File.OpenWrite(Path.Combine(Path.Combine(seriesDir.FullName, "web"), "w3.css")))
 		{
 			using (var instm = Assembly.GetExecutingAssembly().GetManifestResourceStream("tv2html.w3.css"))
