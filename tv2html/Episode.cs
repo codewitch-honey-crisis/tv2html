@@ -36,12 +36,12 @@ public partial class Episode {
 
  foreach(var episode_obj in season.episodes) {
      dynamic e = episode_obj;
-     var e_file = string.Format("S{0:00}E{1:00} {2}.html",e.season_number,e.episode_number,e.name);
+     var e_file = Tmdb.GetSafeFilename(string.Format("S{0:00}E{1:00} {2}.html",e.season_number,e.episode_number,e.name));
         
         #line 52 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\r\n        <a href=\"");
         #line 53 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write(e_file);
+        Response.Write(System.Web.HttpUtility.UrlEncode(e_file).Replace("+","%20"));
         #line 53 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\" onclick=\"w3_close()\" class=\"w3-bar-item w3-button\">");
         #line 53 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
@@ -91,7 +91,7 @@ public partial class Episode {
 
     string? vid_ext = null;
     string? media_type = null;
-    var vid_file = System.IO.Path.Combine(series_dir.FullName,Tmdb.GetSafePath((string)season.name));
+    var vid_file = System.IO.Path.Combine(series_dir.FullName,Tmdb.GetSafeFilename((string)season.name));
     vid_file = System.IO.Path.Combine(vid_file,eps);
     if(System.IO.File.Exists(vid_file+".mp4")) {
         vid_ext = ".mp4";
@@ -122,34 +122,43 @@ public partial class Episode {
         Response.Write("\"/>\r\n        </video>\r\n");
         #line 104 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
 } else {
+
         var still_ext = System.IO.Path.GetExtension((string)episode.still_path);
-        var still_url = "../web/"+System.Web.HttpUtility.UrlEncode(eps+still_ext).Replace("+","%20");
+        var still_url = "../web/"+System.Web.HttpUtility.UrlEncode(Tmdb.GetSafeFilename(eps+still_ext)).Replace("+","%20");
     
-        #line 107 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        #line 108 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("\r\n        ");
+        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+if(!string.IsNullOrEmpty((string)episode.still_path)){ 
+        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\r\n        <div>\r\n        <img alt=\"");
-        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        #line 111 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write(eps+" (unavailable)");
-        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        #line 111 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\" style=\"width:100%;\" src=\"");
-        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        #line 111 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write(still_url);
-        #line 109 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("\" /> \r\n        </div>\r\n        <div><center><h3 style=\"color: red;\">Not available</h3></center></div>\r\n        \r\n");
+        #line 111 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("\" /> \r\n        </div>\r\n        ");
         #line 113 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-}
-        #line 113 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("\r\n         ");
-        #line 114 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
- if(!string.IsNullOrEmpty(episode.overview as string)) { 
-        #line 114 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("\r\n <div class=\"w3-white w3-large\" style=\"max-width: 1200px; margin: auto\">\r\n     <p>");
-        #line 116 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write(episode.overview );
-        #line 116 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("</p>\r\n </div>\r\n ");
-        #line 118 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
 } 
-        #line 118 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        #line 113 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("\r\n        <div><center><h3 style=\"color: red;\">Not available</h3></center></div>\r\n        \r\n");
+        #line 116 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+}
+        #line 116 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("\r\n         ");
+        #line 117 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+ if(!string.IsNullOrEmpty(episode.overview as string)) { 
+        #line 117 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("\r\n <div class=\"w3-white w3-large\" style=\"max-width: 1200px; margin: auto\">\r\n     <p>");
+        #line 119 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write(episode.overview );
+        #line 119 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+        Response.Write("</p>\r\n </div>\r\n ");
+        #line 121 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
+} 
+        #line 121 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\r\n    </div>\r\n    <script>\r\n    // Script to open and close sidebar\r\n    function w3_open() {\r\n        document.getElementById(\"mySidebar\").style.display = \"block\";\r\n    }\r\n\r\n    function w3_close() {\r\n        document.getElementById(\"mySidebar\").style.display = \"none\";\r\n    }\r\n    </script>\r\n</body>\r\n</html>\r\n");
         Response.Flush();
     }

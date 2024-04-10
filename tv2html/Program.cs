@@ -40,7 +40,13 @@ static partial class Program
 			for (int page = 1; (total_pages == -1 || page <= total_pages); ++page)
 			{
 				dynamic results = Tmdb.GetObject(string.Format("https://api.themoviedb.org/3/search/tv?include_adult=false&language={0}&page={1},&query={2}", Language, page, HttpUtility.HtmlEncode(Series)));
-				total_pages = (int)results.total_pages;
+				try
+				{
+					total_pages = (int)results.total_pages;
+				} catch
+				{
+					throw new Exception("Error searching series");
+				}
 				int total_results = (int)results.total_results;
 				if (total_results == 1)
 				{
@@ -75,12 +81,15 @@ static partial class Program
 		args["config"] = config;
 		args["series"] = series;
 		args["lang"] = Language;
-		var seriesDir = Output.CreateSubdirectory(Tmdb.GetSafePath((string)series.name));
+		var seriesDir = Output.CreateSubdirectory(Tmdb.GetSafeFilename((string)series.name));
 		args["series_dir"] = seriesDir;
+		Console.Error.Write("Writing series index...");
 		using (var writer = new StreamWriter(Path.Combine(seriesDir.FullName, "index.html"), false, Encoding.UTF8))
 		{
 			SeriesIndex.Run(writer, args);
 		}
+		Console.Error.WriteLine("done!");
+		Console.Error.Write("Copying CSS...");
 		using (var outstm = File.OpenWrite(Path.Combine(Path.Combine(seriesDir.FullName, "web"), "w3.css")))
 		{
 			using (var instm = Assembly.GetExecutingAssembly().GetManifestResourceStream("tv2html.w3.css"))
@@ -88,12 +97,15 @@ static partial class Program
 				instm!.CopyTo(outstm);
 			}
 		}
-		
+		Console.Error.WriteLine("done!");
+		Console.Error.Write("Creating content ");
 		for (int i = 0; i < series.seasons.Count; i++)
 		{
+			WriteProgressBar((int)(((double)i/(double)(series.seasons.Count-1))*100), i>0, Console.Error);
+
 			dynamic season = series.seasons[i];
-			var seasonDir = seriesDir.CreateSubdirectory(Tmdb.GetSafePath((string)season.name));
-			season = Tmdb.GetObject("https://api.themoviedb.org/3/tv/2919/season/" + string.Concat(season.season_number, "?language=", Language));
+			var seasonDir = seriesDir.CreateSubdirectory(Tmdb.GetSafeFilename((string)season.name));
+			season = Tmdb.GetObject(string.Concat("https://api.themoviedb.org/3/tv/",SeriesId,"/season/",season.season_number, "?language=", Language));
 			args["season"] = season;
 			using (var writer = new StreamWriter(Path.Combine(seasonDir.FullName, "index.html"), false, Encoding.UTF8))
 			{
@@ -107,12 +119,13 @@ static partial class Program
 				var eps = string.Concat(eps_id," ",(string)episode.name);
 				args["episode_id"] = eps_id;
 				args["episode_fullname"] = eps;
-				using(var writer = new StreamWriter(Path.Combine(seasonDir.FullName,eps+".html")))
+				using(var writer = new StreamWriter(Path.Combine(seasonDir.FullName,Tmdb.GetSafeFilename(eps+".html"))))
 				{
 					Episode.Run(writer, args);
 				}
 				
 			}
 		}
+		Console.Error.WriteLine(" done!");
 	}
 }

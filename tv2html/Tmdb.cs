@@ -108,33 +108,26 @@ internal static class Tmdb
 	{
 		get; set;
 	} = "";
-	public static string GetSafePath(string path)
+	
+	public static string GetSafeFilename(string file)
 	{
-		var segs = path.Split(new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar });
-		if (segs.Length == 0)
-		{
-			return "";
-		}
-		var result = segs[0];
-		var inv = Path.GetInvalidPathChars();
+		var result = "";
+		var inv = Path.GetInvalidFileNameChars();
 		var sb = new StringBuilder();
-		for (int i = 1; i < segs.Length; i++)
+		sb.Clear();
+		for (int j = 0; j < file.Length; j++)
 		{
-			sb.Clear();
-			var seg = segs[i];
-			for (int j = 0; j < seg.Length; j++)
+			if (Array.IndexOf(inv, file[j]) > -1)
 			{
-				if (Array.IndexOf(inv, seg[j]) > -1)
-				{
-					sb.Append('_');
-				}
-				else
-				{
-					sb.Append(seg[j]);
-				}
+				sb.Append('_');
 			}
-			result = Path.Combine(result, sb.ToString());
+			else
+			{
+				sb.Append(file[j]);
+			}
 		}
+		result = Path.Combine(result, sb.ToString());
+		
 		return result;
 	}
 	public static JsonDocument GetJson(string url)

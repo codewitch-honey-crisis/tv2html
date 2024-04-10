@@ -14,6 +14,14 @@
     "burn notice id": {
       "commandName": "Project",
       "commandLineArgs": "\"#2919\" {insert_token}"
+    },
+    "murder, she wrote": {
+      "commandName": "Project",
+      "commandLineArgs": "\"murder she wrote\" {auth_token} /output ..\\..\\..\\"
+    },
+    "Eastenders": {
+      "commandName": "Project",
+      "commandLineArgs": "#1871 {auth_token} /output ..\\..\\..\\"
     }
   }
 }

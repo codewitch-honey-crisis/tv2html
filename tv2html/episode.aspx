@@ -48,9 +48,9 @@
         <%
  foreach(var episode_obj in season.episodes) {
      dynamic e = episode_obj;
-     var e_file = string.Format("S{0:00}E{1:00} {2}.html",e.season_number,e.episode_number,e.name);
+     var e_file = Tmdb.GetSafeFilename(string.Format("S{0:00}E{1:00} {2}.html",e.season_number,e.episode_number,e.name));
         %>
-        <a href="<%=e_file%>" onclick="w3_close()" class="w3-bar-item w3-button"><%=e.name%></a>
+        <a href="<%=System.Web.HttpUtility.UrlEncode(e_file).Replace("+","%20")%>" onclick="w3_close()" class="w3-bar-item w3-button"><%=e.name%></a>
         <%
  }
         %>
@@ -79,7 +79,7 @@
 <%
     string? vid_ext = null;
     string? media_type = null;
-    var vid_file = System.IO.Path.Combine(series_dir.FullName,Tmdb.GetSafePath((string)season.name));
+    var vid_file = System.IO.Path.Combine(series_dir.FullName,Tmdb.GetSafeFilename((string)season.name));
     vid_file = System.IO.Path.Combine(vid_file,eps);
     if(System.IO.File.Exists(vid_file+".mp4")) {
         vid_ext = ".mp4";
@@ -102,12 +102,15 @@
             <source src="<%=vid_url%>" type="<%=media_type%>"/>
         </video>
 <%} else {
+
         var still_ext = System.IO.Path.GetExtension((string)episode.still_path);
-        var still_url = "../web/"+System.Web.HttpUtility.UrlEncode(eps+still_ext).Replace("+","%20");
+        var still_url = "../web/"+System.Web.HttpUtility.UrlEncode(Tmdb.GetSafeFilename(eps+still_ext)).Replace("+","%20");
     %>
+        <%if(!string.IsNullOrEmpty((string)episode.still_path)){ %>
         <div>
         <img alt="<%=eps+" (unavailable)"%>" style="width:100%;" src="<%=still_url%>" /> 
         </div>
+        <%} %>
         <div><center><h3 style="color: red;">Not available</h3></center></div>
         
 <%}%>
