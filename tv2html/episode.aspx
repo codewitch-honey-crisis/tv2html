@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <%
 	dynamic series = Arguments["series"];
 	dynamic season = Arguments["season"];

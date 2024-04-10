@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public partial class Episode {
     public static void Run(TextWriter Response, IDictionary<string, object> Arguments) {
         #line 2 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("<!DOCTYPE html>\r\n");
+        Response.Write("﻿<!DOCTYPE html>\r\n");
         #line 2 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
 
 	dynamic series = Arguments["series"];
@@ -159,7 +159,7 @@ if(!string.IsNullOrEmpty((string)episode.still_path)){
         #line 121 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
 } 
         #line 121 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
-        Response.Write("\r\n    </div>\r\n    <script>\r\n    // Script to open and close sidebar\r\n    function w3_open() {\r\n        document.getElementById(\"mySidebar\").style.display = \"block\";\r\n    }\r\n\r\n    function w3_close() {\r\n        document.getElementById(\"mySidebar\").style.display = \"none\";\r\n    }\r\n    </script>\r\n</body>\r\n</html>\r\n");
+        Response.Write("\r\n    </div>\r\n    <script>\r\n    // Script to open and close sidebar\r\n    function w3_open() {\r\n        document.getElementById(\"mySidebar\").style.display = \"block\";\r\n    }\r\n\r\n    function w3_close() {\r\n        document.getElementById(\"mySidebar\").style.display = \"none\";\r\n    }\r\n    </script>\r\n</body>\r\n</html>");
         Response.Flush();
     }
 }
