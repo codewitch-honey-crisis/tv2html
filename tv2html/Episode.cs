@@ -108,7 +108,7 @@ public partial class Episode {
     }
 
     if(vid_ext!=null) {
-        var vid_url = System.Web.HttpUtility.UrlEncode(eps+vid_ext).Replace("+","%20");
+        var vid_url = System.Web.HttpUtility.UrlEncode(Tmdb.GetSafeFilename(eps+vid_ext)).Replace("+","%20");
     
         #line 100 "C:\Users\gazto\source\repos\tv2html\tv2html\episode.aspx"
         Response.Write("\r\n        <video muted autoplay controls>\r\n            <source src=\"");

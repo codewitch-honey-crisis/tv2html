@@ -96,7 +96,7 @@
     }
 
     if(vid_ext!=null) {
-        var vid_url = System.Web.HttpUtility.UrlEncode(eps+vid_ext).Replace("+","%20");
+        var vid_url = System.Web.HttpUtility.UrlEncode(Tmdb.GetSafeFilename(eps+vid_ext)).Replace("+","%20");
     %>
         <video muted autoplay controls>
             <source src="<%=vid_url%>" type="<%=media_type%>"/>
